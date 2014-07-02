@@ -49,7 +49,7 @@ describe 'Student Directory' do
 
 		it 'Can get user input' do
 			input = "String"
-			expect(STDIN).to receive(:gets).and_return(input)
+			expect(STDIN).to receive(:gets).and_return(input+"\n")
 			expect(get_user_input).to eq input
 		end
 
