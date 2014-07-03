@@ -1,4 +1,5 @@
 require 'csv'
+
 def student_list
 	@students ||= []
 end
@@ -12,15 +13,19 @@ def add(student)
 end
 
 def names_that_begin_with(letter = "A")
-	student_list.select {|student| student[:name].include?(letter)}
+	student_list.select {|student| student[:name].start_with?(letter)}
+end
+
+def sort_students_by_cohort_month
+	student_list.sort_by {|student| student[:cohort]}
 end
 
 def names_with_less_than_number_of_letters(number)
 	student_list.select {|student| student[:name].length <= number}
 end
 
-def show(student_list)
-	return student_list.each {|student| puts "#{student[:name]}, #{student[:cohort]} cohort"} if student_list != nil
+def show(list)
+	return list.each {|student| puts "#{student[:name]}, #{student[:cohort]} cohort"} if list != nil
 end
 
 def save_to_file(filename = "students.csv")
@@ -56,7 +61,7 @@ def get_student_cohort
 end
 
 def print_menu_options
-	puts "Main menu\n1-.Add a student\n2-.Show the list of students\n3-.Save the list to a file\n4-.Load a list from a file\n5-.Show students names that begin with an A\n9-.Exit the program"	
+	puts "Main menu\n1-.Add a student\n2-.Show the list of students\n3-.Save the list to a file\n4-.Load a list from a file\n5-.Show students names that begin with an A\n6-.Show students names that have less than 12 letters\n7-.Show students grouped by the cohort that they are in\n9-.Exit the program"	
 end
 
 def menu_options
@@ -72,9 +77,11 @@ def menu_options
 	when "4"
 		load_from_file
 	when "5"
-		show(names_that_begin_with("a"))
+		show(names_that_begin_with("A"))
 	when "6"
 		show(names_with_less_than_number_of_letters(12))
+	when "7"
+		show(sort_students_by_cohort_month)
 	when "9"
 		exit
 	else

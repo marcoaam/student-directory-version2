@@ -66,7 +66,7 @@ describe 'Student Directory' do
 		end
 
 		it 'prints a menu with options' do
-			expect(self).to receive(:puts).with("Main menu\n1-.Add a student\n2-.Show the list of students\n3-.Save the list to a file\n4-.Load a list from a file\n5-.Show students names that begin with an A\n9-.Exit the program")
+			expect(self).to receive(:puts).with("Main menu\n1-.Add a student\n2-.Show the list of students\n3-.Save the list to a file\n4-.Load a list from a file\n5-.Show students names that begin with an A\n6-.Show students names that have less than 12 letters\n7-.Show students grouped by the cohort that they are in\n9-.Exit the program")
 			print_menu_options
 		end
 
@@ -122,6 +122,14 @@ describe 'Student Directory' do
 			menu_options
 		end
 
+		it '7 Print the student sorted by month of the cohort they are in' do
+			selection = "7"
+			expect(self).to receive(:print_menu_options)
+			expect(self).to receive(:get_user_input).and_return(selection)
+			expect(self).to receive(:sort_students_by_cohort_month)
+			menu_options
+		end
+
 		it '9 exit from the program' do
 			selection = "9"
 			expect(self).to receive(:print_menu_options)
@@ -141,15 +149,22 @@ describe 'Student Directory' do
 
 	context 'Have Extras' do
 		it 'Shows names that begin with the letter A by default' do
-			add({name: "arco", cohort: :June})
+			add({name: "Arco", cohort: :June})
 			add({name: "Luis", cohort: :June})
-			expect(names_that_begin_with("a")).to eq ([{name: "arco", cohort: :June}])
+			expect(names_that_begin_with("A")).to eq ([{name: "Arco", cohort: :June}])
 		end
 
 		it 'Shows students that their names have less that 12 letters' do
 			add({name: "Marcoooooooooooooo", cohort: :June})
 			add({name: "Luis", cohort: :June})
 			expect(names_with_less_than_number_of_letters(12)).to eq ([{name: "Luis", cohort: :June}])
+		end
+
+		it 'Shows students sorted and grouped by their month of the cohort they are in' do
+			add({name: "Marco", cohort: :June})
+			add({name: "Luis", cohort: :May})
+			add({name: "Pedro", cohort: :June})
+			expect(sort_students_by_cohort_month).to eq ([{name: "Marco", cohort: :June},{name: "Pedro", cohort: :June},{name: "Luis", cohort: :May}])
 		end
 	end
 end
