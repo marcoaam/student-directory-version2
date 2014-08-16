@@ -31,7 +31,6 @@ end
 def save_to_file(filename = "students.csv")
 	CSV.open(filename, "wb") do |csv|
 		student_list.each {|student| csv << student_values(student)}
-			#student_list.each {|student|  csv << student.values}
 	end
 end
 

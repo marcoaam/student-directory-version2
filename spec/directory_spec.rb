@@ -1,6 +1,7 @@
 require 'directory'
 
 describe 'Student Directory' do
+
 		it 'Have an empty array at the beginning' do
 			expect(student_list.empty?).to be true
 		end
@@ -71,6 +72,7 @@ describe 'Student Directory' do
 		end
 
 	context 'have menu options #' do
+
 		it '1 adds a student' do
 			selection = "1"
 			expect(self).to receive(:print_menu_options)
@@ -145,9 +147,11 @@ describe 'Student Directory' do
 			expect(self).to receive(:puts).with("Try again, invalid menu option")
 			menu_options
 		end
+
 	end
 
 	context 'Have Extras' do
+
 		it 'Shows names that begin with the letter A by default' do
 			add({name: "Arco", cohort: :June})
 			add({name: "Luis", cohort: :June})
@@ -166,5 +170,7 @@ describe 'Student Directory' do
 			add({name: "Pedro", cohort: :June})
 			expect(sort_students_by_cohort_month).to eq ([{name: "Marco", cohort: :June},{name: "Pedro", cohort: :June},{name: "Luis", cohort: :May}])
 		end
+
 	end
+	
 end
